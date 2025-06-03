@@ -2,7 +2,7 @@ from textnode import *
 
 
 def main():
-    textnode = TextNode("Testing this bs", TextType.TEXT_LINK, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    textnode = TextNode("Testing this bs", TextType.LINK, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     print(repr(textnode))
 
 
