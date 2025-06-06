@@ -4,13 +4,14 @@ from parentnode import *
 
 
 def main():
-    textnode = TextNode("Testing this bs", TextType.LINK, "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-    print(repr(textnode))
+    test = TextNode("WATCH OUT FOR THIS **NEW* TRICK!", TextType.TEXT)
+    nodes = split_nodes_delimiter([test], '**', TextType.BOLD)
+    print(nodes)
 
 
 def text_node_to_html_node(text_node):
     match text_node.text_type:
-        case TextType.NORMAL:
+        case TextType.TEXT:
             return LeafNode(None, text_node.text)
         case TextType.BOLD:
             return LeafNode("b", text_node.text)
@@ -24,6 +25,26 @@ def text_node_to_html_node(text_node):
             return LeafNode("img", text_node.text)
         case _:
             raise Exception("Unsupported TextType")
+        
+
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
+    new_nodes = []
+
+    for old_node in old_nodes:
+        strings = old_node.text.split(delimiter)
+        if len(strings) % 2 != 1:
+            raise Exception(f"Missing closing delimiter {delimiter}. String: {old_node.text}")
+
+        for i in range(len(strings)):
+            if len(strings[i]) == 0:
+                continue
+
+            if i % 2 == 1:
+                new_nodes.append(TextNode(strings[i], text_type))
+            else:
+                new_nodes.append(TextNode(strings[i], TextType.TEXT))
+
+    return new_nodes
 
 
 if __name__ == "__main__":
