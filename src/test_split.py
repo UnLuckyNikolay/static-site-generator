@@ -2,69 +2,6 @@ import unittest
 from functions_split import *
 
 class TestSplitFunctions(unittest.TestCase):
-    def test__markdown_to_blocks(self):
-        input = """
-This is **bolded** paragraph
-
-This is another paragraph with _italic_ text and `code` here
-This is the same paragraph on a new line
-
-- This is a list
-- with items
-"""
-        blocks = markdown_to_blocks(input)
-        self.assertEqual(
-            blocks,
-            [
-                "This is **bolded** paragraph",
-                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
-                "- This is a list\n- with items",
-            ],
-        )
-
-    def test__markdown_to_blocks__empty_blocks_and_whitespaces(self):
-        input = """
-- Start of a list
-- Middle of a list
-- End of a list
-
-  
-
-      
-
-
-
-
-
-
-   
-
-- Another List
-"""
-        blocks = markdown_to_blocks(input)
-        self.assertEqual(
-            blocks,
-            [
-                "- Start of a list\n- Middle of a list\n- End of a list",
-                "- Another List",
-            ],
-        )
-
-    def test__markdown_to_blocks__empty_blocks_and_whitespaces_2(self):
-        input = """
-
- 
- 
- 
-"""
-        blocks = markdown_to_blocks(input)
-        self.assertEqual(
-            blocks,
-            [],
-        )
-
-
-    
     def test__split_nodes__text(self):
         input = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
         nodes = split_nodes(input)

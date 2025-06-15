@@ -3,15 +3,6 @@ import re
 from textnode import TextNode, TextType
 
 
-def markdown_to_blocks(input):
-    blocks = input.split("\n\n")
-
-    blocks = list(map(lambda x: x.strip(), blocks))
-    blocks = list(filter(lambda x: x != "", blocks))
-
-    return blocks
-
-
 
 def split_nodes(input):
 
