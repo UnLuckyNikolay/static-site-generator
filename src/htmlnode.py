@@ -23,3 +23,40 @@ class HTMLNode():
             for pair in self.props.items():
                 result += f" {pair[0]}=\"{pair[1]}\""
         return result
+
+
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)    
+        
+    def __repr__(self):
+        return f"ParentNode({self.tag}, {self.children}, {self.props})"
+
+    def to_html(self):
+        if self.tag == None:
+            raise ValueError("Parent: missing tag")
+        if self.children == None:
+            raise ValueError("Parent: missing children")
+        
+        children_to_html = ""
+        for child in self.children:
+            children_to_html += child.to_html()
+                
+        result = f"<{self.tag}{self.props_to_html()}>{children_to_html}</{self.tag}>"
+
+        return result
+
+
+
+class LeafNode(HTMLNode):
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, None, props)
+
+    def to_html(self):
+        if self.value == None:
+            raise ValueError
+        if self.tag == None:
+            return self.value
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+    

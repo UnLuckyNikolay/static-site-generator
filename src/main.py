@@ -1,6 +1,5 @@
 from textnode import TextType, TextNode
-from leafnode import LeafNode
-from parentnode import ParentNode
+from htmlnode import LeafNode, ParentNode
 from functions_split import *
 
 
