@@ -4,12 +4,17 @@ from textnode import TextNode, TextType
 
 
 def split_nodes(input):
-    new_nodes = []
 
     if isinstance(input, str):
-        input = [TextNode(input, TextType.TEXT)]
+        new_nodes = [TextNode(input, TextType.TEXT)]
+    elif isinstance(input, TextNode):
+        new_nodes = [input]
+    elif isinstance(input, list):
+        new_nodes = input.copy()
+    else:
+        raise Exception("Function split_nodes only accepts strings, TextNodes or lists")
 
-    new_nodes = split_nodes_by_type(input, TextType.IMAGE)
+    new_nodes = split_nodes_by_type(new_nodes, TextType.IMAGE)
     new_nodes = split_nodes_by_type(new_nodes, TextType.LINK)
     new_nodes = split_nodes_by_type(new_nodes, TextType.BOLD)
     new_nodes = split_nodes_by_type(new_nodes, TextType.ITALIC)
