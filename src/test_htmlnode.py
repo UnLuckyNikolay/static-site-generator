@@ -3,28 +3,28 @@ from htmlnode import *
 
 
 class TestHTMLNode(unittest.TestCase):
-    def test_eq(self):
+    def test__htmlnode__eq(self):
         node1 = HTMLNode()
         node2 = HTMLNode()
         self.assertEqual(node1, node2)
 
-    def test_eq2(self):
+    def test__htmlnode__eq2(self):
         node1 = HTMLNode("p", "Test node", [], {"test key":"test value"})
         node2 = HTMLNode("p", "Test node", [], {"test key":"test value"})
         self.assertEqual(node1, node2)
 
-    def test_repr(self):
+    def test__htmlnode__repr(self):
         node1 = HTMLNode("p", "Test node", None, {"test key":"test value"})
         self.assertEqual("HTMLNode(p, Test node, None, {'test key': 'test value'})", repr(node1))
 
-    def test_props_to_html(self):
+    def test__htmlnode__props_to_html(self):
         node1 = HTMLNode("p", "Test node", None, {"test key":"test value", "key2":"value2"})
         self.assertEqual(" test key=\"test value\" key2=\"value2\"", node1.props_to_html())
 
 
 
 class TestParentNode(unittest.TestCase):
-    def test_to_html_with_children(self):
+    def test__parentnode__with_children(self):
         node1 = ParentNode(
             "p",
             [
@@ -36,7 +36,7 @@ class TestParentNode(unittest.TestCase):
         )
         self.assertEqual(node1.to_html(), "<p><b>One, two, three, </b>four, five, six, <i>seven, eight, nine.</i></p>")
 
-    def test_to_html_with_grandchildren(self):
+    def test__parentnode__with_grandchildren(self):
         child1 = ParentNode(
             "p",
             [
@@ -65,15 +65,15 @@ class TestParentNode(unittest.TestCase):
 
 
 class TestLeafNode(unittest.TestCase):
-    def test_to_html(self):
+    def test__leafnode(self):
         node1 = LeafNode("p", "Test case")
         self.assertEqual(node1.to_html(), "<p>Test case</p>")
 
-    def test_to_html_with_props(self):
+    def test__leafnode__with_props(self):
         node1 = LeafNode("h1", "You ain't gonna believe this new leak!", { "href":"https://www.youtube.com/watch?v=dQw4w9WgXcQ" })
         self.assertEqual(node1.to_html(), "<h1 href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\">You ain't gonna believe this new leak!</h1>")
 
-    def test_to_html_no_tag(self):
+    def test__leafnode__no_tag(self):
         node1 = LeafNode(None, "Just text")
         self.assertEqual(node1.to_html(), "Just text")
 

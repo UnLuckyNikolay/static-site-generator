@@ -3,6 +3,16 @@ import re
 from textnode import TextNode, TextType
 
 
+def markdown_to_blocks(input):
+    blocks = input.split("\n\n")
+
+    blocks = list(map(lambda x: x.strip(), blocks))
+    blocks = list(filter(lambda x: x != "", blocks))
+
+    return blocks
+
+
+
 def split_nodes(input):
 
     if isinstance(input, str):
@@ -21,6 +31,8 @@ def split_nodes(input):
     new_nodes = split_nodes_by_type(new_nodes, TextType.CODE)
 
     return new_nodes
+
+
 
 def split_nodes_by_type(old_nodes, text_type):
     delimiter_types = [TextType.CODE, TextType.BOLD, TextType.ITALIC]
