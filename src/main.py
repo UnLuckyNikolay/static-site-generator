@@ -1,13 +1,19 @@
-import os, shutil, re
+import os, shutil, re, sys
 
 from functions_blocks import markdown_to_html_node
 
-public_dir = "./public"
+public_dir = "./docs"
 static_dir = "./static"
 content_dir = "./content"
 template_path = "./template.html"
 
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
+else:
+    basepath = "/"
+
 def main():
+
     if os.path.exists(public_dir):
         shutil.rmtree(public_dir)
     os.mkdir(public_dir)
@@ -29,7 +35,6 @@ def generate_all_pages(subfolders=""):
         else:
             generate_page(f"{content_dir}{subfolders}/{file}")
 
-
 def generate_page(path_to_file):
     path_file = path_to_file.removeprefix(content_dir)
     path = "/".join(path_file.split("/")[:-1])
@@ -46,6 +51,8 @@ def generate_page(path_to_file):
     html = markdown_to_html_node(markdown).to_html()
     page = page.replace("{{ Title }}", title)
     page = page.replace("{{ Content }}", html)
+    page = page.replace("href=\"/", f"href=\"{basepath}")
+    page = page.replace("src=\"/", f"src=\"{basepath}")
 
     # Done in generate_all_pages
     #if not os.path.exists(f"{public_dir}{path}"):
