@@ -43,12 +43,7 @@ def block_to_html_node(block):
     match(type):
         case BlockType.PARAGRAPH:
             result = ParentNode("p", [])
-
-            # Converts block into 1 line of text
-            lines = block.split("\n")
-            lines = list(map(lambda x: x.strip(), lines))
-            text = " ".join(lines)
-
+            text = reduce_block_to_a_line(block)
             result.children = convert_text_to_html_nodes(text)
 
         case BlockType.HEADING:
@@ -62,6 +57,7 @@ def block_to_html_node(block):
         case BlockType.QUOTE:
             result = ParentNode("blockquote", [])
             text = remove_n_chars_from_each_line(block, 1)
+            text = reduce_block_to_a_line(text)
             result.children = convert_text_to_html_nodes(text)
 
         case BlockType.UNORDERED_LIST:
@@ -80,6 +76,13 @@ def block_to_html_node(block):
             result = ParentNode("pre", [LeafNode("code", text)])
         
     return result
+
+def reduce_block_to_a_line(block):
+    lines = block.split("\n")
+    lines = list(map(lambda x: x.strip(), lines))
+    text = " ".join(lines)
+
+    return text
 
 def convert_list_to_html_nodes(text):
     lines = text.split("\n")
@@ -119,9 +122,9 @@ def text_node_to_html_node(text_node):
         case TextType.CODE:
             return LeafNode("code", text_node.text)
         case TextType.LINK:
-            return LeafNode("a", text_node.text)
+            return LeafNode("a", text_node.text, { "href" : text_node.url })
         case TextType.IMAGE:
-            return LeafNode("img", text_node.text)
+            return LeafNode("img", text_node.text, { "src" : text_node.url })
         case _:
             raise Exception("Unsupported TextType")
 
