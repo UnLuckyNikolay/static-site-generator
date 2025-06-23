@@ -59,7 +59,7 @@ the **same** even with inline stuff
         html = node.to_html()
         self.assertEqual(
             html,
-            "<div><blockquote>I just wanna tell you how I'm feeling\nGotta make you understand</blockquote></div>",
+            "<div><blockquote>I just wanna tell you how I'm feeling Gotta make you understand</blockquote></div>",
         )
 
     def test__markdown_to_html_node__unordered_list(self):

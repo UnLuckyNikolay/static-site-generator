@@ -12,6 +12,8 @@ if len(sys.argv) > 1:
 else:
     basepath = "/"
 
+
+
 def main():
 
     if os.path.exists(public_dir):
@@ -20,7 +22,6 @@ def main():
 
     copy_file_tree(static_dir, public_dir)
 
-    #generate_page("./content/index.md")
     generate_all_pages()
 
 
@@ -53,10 +54,6 @@ def generate_page(path_to_file):
     page = page.replace("{{ Content }}", html)
     page = page.replace("href=\"/", f"href=\"{basepath}")
     page = page.replace("src=\"/", f"src=\"{basepath}")
-
-    # Done in generate_all_pages
-    #if not os.path.exists(f"{public_dir}{path}"):
-    #    os.makedirs(f"{public_dir}{path}")
 
     with open(f"{public_dir}{path}/{file_name}", "w") as page_file:
         page_file.write(page)

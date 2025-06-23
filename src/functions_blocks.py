@@ -1,6 +1,6 @@
 import re
 
-from textnode import TextNode, TextType
+from textnode import TextType
 from enum import Enum
 from htmlnode import ParentNode, LeafNode
 from functions_split import split_nodes

@@ -45,10 +45,6 @@ def split_nodes_by_type(old_nodes, text_type):
             delimiter = delimiters[delimiter_types.index(text_type)]
 
             for old_node in old_nodes:
-                #if old_node.text_type != TextType.TEXT: # For now only splits plain text
-                #    new_nodes.append(old_node)
-                #    continue
-
                 if old_node.text_type == TextType.IMAGE or old_node.text_type == TextType.LINK:
                     new_nodes.append(old_node)
                     continue
@@ -58,7 +54,7 @@ def split_nodes_by_type(old_nodes, text_type):
                     raise Exception(f"Missing closing delimiter {delimiter}. String: {old_node.text}")
 
                 for i in range(len(strings)):
-                    if len(strings[i]) == 0: # Remove this to keep empty nodes
+                    if len(strings[i]) == 0:
                         continue
 
                     if i % 2 == 1:
